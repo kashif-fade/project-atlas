@@ -128,3 +128,7 @@
     @apply font-sans;
   }
 }
+html, body {
+  height: 100%;
+  background-color: #020617; /* deeper slate */
+}
