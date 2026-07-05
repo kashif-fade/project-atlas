@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { Explorer } from "@/lib/types";
 import type { ReadingLevel } from "@/lib/museum/types";
 import { getCuratorGreeting } from "@/lib/curator";
+import { dedupeDiscoveries } from "@/lib/migrate";
 import ProfilePicker from "@/components/atlas/ProfilePicker";
 import Onboarding from "@/components/atlas/Onboarding";
 import MuseumView from "@/components/atlas/MuseumView";
@@ -18,10 +19,26 @@ export default function Home() {
   const [greeting, setGreeting] = useState<string | null>(null);
 
   useEffect(() => {
-    db.explorers.toArray().then((all) => {
-      setExplorers(all);
-      setScreen(all.length > 0 ? "picker" : "onboarding");
-    });
+    const load = async () => {
+      const all = await db.explorers.toArray();
+
+      // One-time repair: old versions could save duplicate discoveries
+      const repaired = await Promise.all(
+        all.map(async (e) => {
+          const fixed = dedupeDiscoveries(e);
+          if (fixed) {
+            await db.explorers.put(fixed);
+            return fixed;
+          }
+          return e;
+        })
+      );
+
+      setExplorers(repaired);
+      setScreen(repaired.length > 0 ? "picker" : "onboarding");
+    };
+
+    load();
   }, []);
 
   async function handleCreate(
