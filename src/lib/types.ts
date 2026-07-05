@@ -20,4 +20,6 @@ export type DiscoveryRecord = {
   fact: string;
   emoji: string;
   foundAt: number;
+  /** Starred by the explorer in their journal */
+  favorite?: boolean;
 };

@@ -108,7 +108,9 @@ export default function MuseumView({
         </div>
       </div>
 
-      {view === "journal" && <Journal explorer={explorer} />}
+      {view === "journal" && (
+        <Journal explorer={explorer} onExplorerChange={onExplorerChange} />
+      )}
 
       {view === "room" && (
         <div className="text-center space-y-4">
