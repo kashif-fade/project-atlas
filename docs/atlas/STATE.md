@@ -1,3 +1,8 @@
+> **⚠️ HISTORICAL DOCUMENT** — this was the vision/state doc before the
+> 8-session build (2026-07-05). It no longer reflects the app. For the
+> current consolidated summary see **PROJECT.md**; for the session-by-
+> session changelog see **ROADMAP.md**.
+
 # Project Atlas — Current State
 
 Version: 0.1.0 (Alpha Foundation)
