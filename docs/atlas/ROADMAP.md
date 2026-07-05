@@ -98,3 +98,8 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
   room-complete note, bigger touch targets with touch-manipulation and
   select-none (no double-tap zoom or text selection), scene fade-in,
   proper page title/description, dark body background (no white flash).
+
+- **2026-07-05 — PWA**: web app manifest (standalone, portrait, dark theme),
+  app icons (golden wonder-sparkle on night gradient; favicon, apple-icon,
+  192/512 + maskable), iOS standalone meta. "Add to Home Screen" on iPhone
+  now installs Atlas like a real app. Deploy target: Vercel.
