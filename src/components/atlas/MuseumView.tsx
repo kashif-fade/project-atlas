@@ -114,6 +114,13 @@ export default function MuseumView({
     if (next) stopSpeaking();
   }
 
+  function stepRoom(delta: number) {
+    setPendingOpenId(null);
+    setRoomIndex(
+      (roomIndex + delta + museumRooms.length) % museumRooms.length
+    );
+  }
+
   function navigateToDiscovery(discoveryId: string) {
     const target = findDiscovery(discoveryId);
     if (!target) return;
@@ -177,7 +184,7 @@ export default function MuseumView({
       {view === "room" && (
         <div className="text-center space-y-4">
           {/* Room navigation */}
-          <div className="flex justify-center gap-2 flex-wrap">
+          <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] md:flex-wrap md:justify-center md:overflow-visible">
             {museumRooms.map((r, i) => (
               <button
                 key={r.id}
@@ -185,7 +192,7 @@ export default function MuseumView({
                   setPendingOpenId(null);
                   setRoomIndex(i);
                 }}
-                className={`px-3 py-2 rounded-lg text-sm transition ${
+                className={`shrink-0 px-3 py-2 rounded-lg text-sm transition touch-manipulation ${
                   i === roomIndex
                     ? "bg-slate-700"
                     : "bg-slate-900 hover:bg-slate-800"
@@ -208,12 +215,29 @@ export default function MuseumView({
           )}
 
           <div>
-            <h1 className="text-2xl font-light">
-              {room.emoji} {room.name}
-            </h1>
+            <div className="flex items-center justify-center gap-4">
+              <button
+                onClick={() => stepRoom(-1)}
+                className="w-11 h-11 rounded-full bg-slate-900 hover:bg-slate-800 text-2xl leading-none touch-manipulation"
+                aria-label="Previous room"
+              >
+                ‹
+              </button>
+              <h1 className="text-2xl font-light min-w-40">
+                {room.emoji} {room.name}
+              </h1>
+              <button
+                onClick={() => stepRoom(1)}
+                className="w-11 h-11 rounded-full bg-slate-900 hover:bg-slate-800 text-2xl leading-none touch-manipulation"
+                aria-label="Next room"
+              >
+                ›
+              </button>
+            </div>
             <p className="text-slate-500 text-sm mt-1">
-              {foundInRoom} of {room.discoveries.length} wonders found —
-              tap the sparkling ones!
+              {foundInRoom === room.discoveries.length
+                ? "🏆 Every wonder here is in your Journal!"
+                : `${foundInRoom} of ${room.discoveries.length} wonders found — tap the sparkling ones!`}
             </p>
           </div>
 

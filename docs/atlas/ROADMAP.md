@@ -49,7 +49,7 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
 | 4 | Journal as collection: wings, progress fill, favorites | ✅ Done | tile grids + starring |
 | 5 | Curator memory + daily mystery exhibit + fact connections | ✅ Done | greeting, 🔮 daily hint, chips |
 | 6 | Content scale-up (120 authored: 100 live + 20 vaulted), read-aloud, sound | ✅ Done | vault flip documented in data.ts |
-| 7 | Polish: tablet/phone layout, transitions, kid-proofing | ⬜ Planned | |
+| 7 | Polish: tablet/phone layout, transitions, kid-proofing | ✅ Done | arrows, chips, touch targets |
 | 8 | Playtest iteration with the kid | ⬜ Planned | non-negotiable |
 
 ## Changelog
@@ -91,3 +91,10 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
   exhibit + journal cards), synthesized WebAudio sounds (tap pop, discovery
   arpeggio, mystery shimmer), mute toggle persisted in localStorage. Curator
   completion milestone now tracks totalDiscoveries.
+
+- **2026-07-05 — Session 7**: polish pass — responsive container (wider on
+  tablet), taller scenes on bigger screens, horizontally scrollable room
+  chips on phones, ‹ › prev/next room arrows flanking the room title,
+  room-complete note, bigger touch targets with touch-manipulation and
+  select-none (no double-tap zoom or text selection), scene fade-in,
+  proper page title/description, dark body background (no white flash).

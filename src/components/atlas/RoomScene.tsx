@@ -101,9 +101,11 @@ export default function RoomScene({
       : [];
 
   return (
-    <div
-      className={`relative w-full rounded-2xl border border-slate-800 overflow-hidden ${bg}`}
-      style={{ height: "26rem" }}
+    <motion.div
+      className={`relative w-full rounded-2xl border border-slate-800 overflow-hidden select-none h-96 sm:h-[28rem] md:h-[32rem] ${bg}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.35 }}
     >
       {/* Objects */}
       {room.discoveries.map((d, i) => {
@@ -115,7 +117,7 @@ export default function RoomScene({
           <motion.button
             key={d.id}
             onClick={() => openExhibit(d)}
-            className="absolute -translate-x-1/2 -translate-y-1/2 p-2 focus:outline-none"
+            className="absolute -translate-x-1/2 -translate-y-1/2 p-3 focus:outline-none touch-manipulation"
             style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
             animate={found ? {} : { y: [0, -7, 0] }}
             transition={
@@ -139,7 +141,7 @@ export default function RoomScene({
               />
             )}
             <span
-              className={`block text-4xl drop-shadow-lg ${
+              className={`block text-4xl sm:text-5xl drop-shadow-lg ${
                 found ? "opacity-90" : ""
               }`}
             >
@@ -311,6 +313,6 @@ export default function RoomScene({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }

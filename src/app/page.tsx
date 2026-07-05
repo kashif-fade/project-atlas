@@ -92,10 +92,10 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen flex items-start justify-center pt-10 pb-16 bg-slate-950 text-white overflow-y-auto">
-      <div className="w-full max-w-md px-6">
+    <main className="min-h-screen flex items-start justify-center pt-6 sm:pt-10 pb-16 bg-slate-950 text-white overflow-y-auto">
+      <div className="w-full max-w-md md:max-w-2xl px-4 sm:px-6">
         {screen === "loading" && (
-          <p className="text-slate-500 text-center">The Museum is opening…</p>
+          <p className="text-slate-500 text-center animate-pulse">The Museum is opening…</p>
         )}
 
         {screen === "picker" && (
