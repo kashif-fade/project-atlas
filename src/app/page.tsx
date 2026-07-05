@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { db } from "@/lib/db";
 import { Explorer } from "@/lib/types";
+import type { ReadingLevel } from "@/lib/museum/types";
 import ProfilePicker from "@/components/atlas/ProfilePicker";
 import Onboarding from "@/components/atlas/Onboarding";
 import MuseumView from "@/components/atlas/MuseumView";
@@ -21,13 +22,18 @@ export default function Home() {
     });
   }, []);
 
-  async function handleCreate(name: string, avatar: string) {
+  async function handleCreate(
+    name: string,
+    avatar: string,
+    readingLevel: ReadingLevel
+  ) {
     const newExplorer: Explorer = {
       id: crypto.randomUUID(),
       name,
       avatar,
       createdAt: Date.now(),
       lastVisitAt: Date.now(),
+      readingLevel,
       discoveries: [],
     };
 
