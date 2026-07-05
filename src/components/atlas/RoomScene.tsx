@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { Discovery, MuseumRoom, ReadingLevel } from "@/lib/museum/types";
 import { getFact } from "@/lib/museum/types";
 import { findDiscovery } from "@/lib/museum/data";
+import { playPop } from "@/lib/sound";
+import { speak, stopSpeaking } from "@/lib/speech";
 
 type Props = {
   room: MuseumRoom;
@@ -67,14 +69,24 @@ export default function RoomScene({
   const bg = SCENE_BG[room.id] || "bg-slate-900";
 
   function openExhibit(d: Discovery) {
+    playPop();
+    stopSpeaking();
     setSelected(d);
     setMoreOpen(false);
   }
 
   function closeExhibit() {
     if (discoveringId) return; // don't close mid-discovery
+    stopSpeaking();
     setSelected(null);
     setMoreOpen(false);
+  }
+
+  function readAloud() {
+    if (!selected) return;
+    const parts = [selected.title, getFact(selected, level)];
+    if (moreOpen && selected.more) parts.push(selected.more);
+    speak(parts.join(". "));
   }
 
   const selectedFound = selected ? foundIds.has(selected.id) : false;
@@ -197,6 +209,14 @@ export default function RoomScene({
                   <p className="text-slate-200 text-lg leading-relaxed">
                     {getFact(selected, level)}
                   </p>
+
+                  <button
+                    onClick={readAloud}
+                    className="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm transition"
+                    title="Read it to me"
+                  >
+                    🔊 Read to me
+                  </button>
 
                   {selected.more && (
                     <button

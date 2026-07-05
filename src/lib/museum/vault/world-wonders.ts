@@ -1,0 +1,103 @@
+import { MuseumRoom } from "../types";
+
+/**
+ * VAULT ROOM — not yet open to explorers.
+ * To open this wing: import it in src/lib/museum/data.ts and add to museumRooms.
+ */
+export const worldWonders: MuseumRoom = {
+  id: "world-wonders",
+  name: "World Wonders",
+  emoji: "🗺️",
+  discoveries: [
+    {
+      id: "eiffel-tower",
+      title: "The Eiffel Tower",
+      emoji: "🗼",
+      fact: "The Eiffel Tower in Paris grows about 15 centimeters taller in summer — heat makes its 10,000 tonnes of iron expand!",
+      factSimple: "The Eiffel Tower grows taller in summer.",
+      more: "When it was built in 1889, many Parisians called it ugly and demanded it be torn down. It was saved because it made a perfect radio tower — and now it's the most visited monument on Earth.",
+      relatedTo: ["atoms"],
+    },
+    {
+      id: "statue-liberty",
+      title: "Statue of Liberty",
+      emoji: "🗽",
+      fact: "The Statue of Liberty was a gift from France, shipped to America in 350 pieces packed in 214 crates, like the world's biggest building kit.",
+      factSimple: "The Statue of Liberty arrived in 350 pieces.",
+      more: "She's made of copper thinner than two coins — and she was shiny brown when new! Air and rain slowly turned the copper green, a coating called patina that now protects her.",
+      relatedTo: ["crystals"],
+    },
+    {
+      id: "taj-mahal",
+      title: "The Taj Mahal",
+      emoji: "🕌",
+      fact: "The Taj Mahal in India is a marble palace built by an emperor in memory of his beloved wife. Twenty thousand workers and a thousand elephants helped build it.",
+      factSimple: "A thousand elephants helped build the Taj Mahal.",
+      more: "Its white marble changes color with the light — pinkish at dawn, dazzling white at noon, golden by moonlight. The four tall towers lean slightly outward on purpose, so they'd fall away from the dome in an earthquake.",
+      relatedTo: ["elephant", "earthquake"],
+    },
+    {
+      id: "machu-picchu",
+      title: "Machu Picchu",
+      emoji: "⛰️",
+      fact: "Machu Picchu is a 500-year-old Inca city built high in the clouds of the Andes mountains — with stones cut so precisely that not even a knife blade fits between them.",
+      factSimple: "Machu Picchu is a city in the clouds.",
+      more: "The Incas built it without wheels, iron tools, or written plans, and its stone walls have survived centuries of earthquakes that toppled modern buildings nearby. Llamas still wander its grassy terraces today.",
+      relatedTo: ["mountains", "earthquake"],
+    },
+    {
+      id: "venice",
+      title: "Venice",
+      emoji: "🛶",
+      fact: "Venice is a city built on water — its streets are canals, its buses are boats, and its buildings stand on millions of wooden poles driven into the mud 1,000 years ago.",
+      factSimple: "Venice's streets are made of water.",
+      more: "Underwater, without air, the wooden poles turned almost as hard as stone instead of rotting. Venice has more than 400 bridges, and its gondola boats are always painted black by a law from centuries ago.",
+      relatedTo: ["ancient-ships"],
+    },
+    {
+      id: "big-ben",
+      title: "Big Ben",
+      emoji: "🕰️",
+      fact: "Big Ben is actually the name of the giant 13-tonne bell inside London's famous clock tower — not the tower itself. Its bongs are broadcast live on the radio.",
+      factSimple: "Big Ben is the bell, not the tower!",
+      more: "The clock's keepers fine-tune its speed with old pennies: adding one coin to the pendulum makes the clock gain two-fifths of a second a day. It has kept nearly perfect time through storms, snow, and even bombs.",
+      relatedTo: ["steam-train"],
+    },
+    {
+      id: "golden-gate",
+      title: "Golden Gate Bridge",
+      emoji: "🌉",
+      fact: "The Golden Gate Bridge's two main cables are each made of 27,572 threads of wire — together, enough wire to circle the Earth three times.",
+      factSimple: "Its cables hold enough wire to circle the Earth three times.",
+      more: "The bridge isn't golden — it's 'International Orange', chosen so ships can see it through San Francisco's thick fog. A team of painters works on it all year round, every year, forever.",
+      relatedTo: ["fog"],
+    },
+    {
+      id: "petra",
+      title: "Petra",
+      emoji: "🏜️",
+      fact: "Petra is an ancient city carved straight into rose-red desert cliffs 2,000 years ago — its people cut palaces, temples, and tombs out of solid rock.",
+      factSimple: "Petra is a city carved into a cliff.",
+      more: "Petra's builders were water wizards: they carved channels and dams that caught desert flash floods and stored water for a city of 20,000 people. Hidden for centuries, it was known only to local Bedouin until 1812.",
+      relatedTo: ["desert", "caves"],
+    },
+    {
+      id: "opera-house",
+      title: "Sydney Opera House",
+      emoji: "🎭",
+      fact: "The Sydney Opera House's roof looks like billowing sails — it's covered in more than a million tiles that clean themselves in the rain.",
+      factSimple: "Its roof has a million self-cleaning tiles.",
+      more: "The design came from a young Danish architect's sketch that nearly ended up in the rejection pile. Some say he cracked the curved roof puzzle while peeling an orange — all the 'sails' are pieces of one imaginary sphere.",
+      relatedTo: ["ancient-ships"],
+    },
+    {
+      id: "amazon",
+      title: "The Amazon Rainforest",
+      emoji: "🦜",
+      fact: "The Amazon rainforest is home to 1 in 10 of all species on Earth — and rain clouds made by its own trees water the forest, so the Amazon helps make its own weather.",
+      factSimple: "The Amazon makes its own rain!",
+      more: "Dust that blows all the way across the ocean from the Sahara desert fertilizes the Amazon's soil — one wonder of the world feeding another. Scientists still discover new Amazon species almost every week.",
+      relatedTo: ["rain", "desert", "sloth"],
+    },
+  ],
+};

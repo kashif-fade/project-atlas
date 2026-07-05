@@ -48,7 +48,7 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
 | 3 | Hidden-object rooms: scene layouts, tap-to-reveal, animation | ✅ Done | RoomScene + framer-motion |
 | 4 | Journal as collection: wings, progress fill, favorites | ✅ Done | tile grids + starring |
 | 5 | Curator memory + daily mystery exhibit + fact connections | ✅ Done | greeting, 🔮 daily hint, chips |
-| 6 | Content scale-up (~180 discoveries), read-aloud (Web Speech), sound | ⬜ Planned | hold ~30% for week-3 "new wing" drop |
+| 6 | Content scale-up (120 authored: 100 live + 20 vaulted), read-aloud, sound | ✅ Done | vault flip documented in data.ts |
 | 7 | Polish: tablet/phone layout, transitions, kid-proofing | ⬜ Planned | |
 | 8 | Playtest iteration with the kid | ⬜ Planned | non-negotiable |
 
@@ -83,3 +83,11 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
   time since last visit, last discovery), deterministic daily mystery exhibit
   (hint line, golden pulsing ring, celebration on find — no streaks), and
   connected-wonder chips in exhibit cards with cross-room navigation.
+
+- **2026-07-05 — Session 6**: 4 new rooms live (Human Body Hall, Inventors'
+  Workshop, Long Ago Hall, Tiny World → 100 discoveries live), 2 vault rooms
+  authored for the week-3 "new wing" drop (Plant Conservatory, World Wonders —
+  flip instructions in data.ts), read-aloud via Web Speech ("🔊 Read to me" on
+  exhibit + journal cards), synthesized WebAudio sounds (tap pop, discovery
+  arpeggio, mystery shimmer), mute toggle persisted in localStorage. Curator
+  completion milestone now tracks totalDiscoveries.

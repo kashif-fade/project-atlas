@@ -5,6 +5,14 @@ import { earthLab } from "./packs/earth-lab";
 import { spaceWing } from "./packs/space-wing";
 import { dinosaurHall } from "./packs/dinosaur-hall";
 import { animalKingdom } from "./packs/animal-kingdom";
+import { humanBody } from "./packs/human-body";
+import { inventorsWorkshop } from "./packs/inventors-workshop";
+import { longAgoHall } from "./packs/long-ago-hall";
+import { tinyWorld } from "./packs/tiny-world";
+// VAULT (week-3 "a new wing has opened!" drop) — import from ./vault/ and
+// append to museumRooms when it's time:
+//   import { plantConservatory } from "./vault/plant-conservatory";
+//   import { worldWonders } from "./vault/world-wonders";
 
 export const museumRooms: MuseumRoom[] = [
   oceanHall,
@@ -13,6 +21,10 @@ export const museumRooms: MuseumRoom[] = [
   spaceWing,
   dinosaurHall,
   animalKingdom,
+  humanBody,
+  inventorsWorkshop,
+  longAgoHall,
+  tinyWorld,
 ];
 
 /** Total number of discoveries in the museum */

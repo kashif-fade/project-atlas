@@ -1,3 +1,5 @@
+import { totalDiscoveries } from "./museum/data";
+
 /** "The Deep Sea" -> "deep sea", for use mid-sentence */
 function casual(title: string) {
   return title.replace(/^The /, "").toLowerCase();
@@ -41,7 +43,7 @@ export function getCuratorMessage(discoveryCount: number, lastRoom: string) {
   if (discoveryCount === 25) {
     return "Twenty-five discoveries. You are becoming a true Explorer.";
   }
-  if (discoveryCount >= 60) {
+  if (discoveryCount >= totalDiscoveries) {
     return "You have found every wonder... for now. The Museum is dreaming up new wings.";
   }
 

@@ -1,0 +1,102 @@
+import { MuseumRoom } from "../types";
+
+/**
+ * VAULT ROOM — not yet open to explorers.
+ * To open this wing: import it in src/lib/museum/data.ts and add to museumRooms.
+ */
+export const plantConservatory: MuseumRoom = {
+  id: "plant-conservatory",
+  name: "Plant Conservatory",
+  emoji: "🌿",
+  discoveries: [
+    {
+      id: "talking-trees",
+      title: "Talking Trees",
+      emoji: "🌳",
+      fact: "Trees in a forest share food and warnings through an underground web of fungus threads connecting their roots — scientists call it the 'wood wide web'.",
+      factSimple: "Trees talk to each other underground!",
+      more: "Big old 'mother trees' send extra sugar to their seedlings through the web, and a tree attacked by insects can warn its neighbors to make their leaves taste bad before the pests arrive.",
+      relatedTo: ["soil", "mushroom"],
+    },
+    {
+      id: "sunflower",
+      title: "Sunflowers",
+      emoji: "🌻",
+      fact: "Young sunflowers turn their faces to follow the Sun across the sky all day, then swing back east overnight to catch the sunrise.",
+      factSimple: "Sunflowers turn to follow the Sun.",
+      more: "A sunflower head is actually hundreds of tiny flowers packed in perfect spirals — the same swirling pattern found in pinecones, seashells, and galaxies.",
+      relatedTo: ["sun", "milky-way"],
+    },
+    {
+      id: "venus-flytrap",
+      title: "Venus Flytrap",
+      emoji: "🪤",
+      fact: "The Venus flytrap is a plant that eats insects! It counts: a bug must touch its trigger hairs twice before the trap snaps shut in a tenth of a second.",
+      factSimple: "This plant catches and eats bugs!",
+      more: "Counting to two stops the trap wasting energy on raindrops. Flytraps grow naturally in only one small corner of the world — the boggy soils of the Carolinas, where poor soil made eating bugs a clever way to get extra food.",
+      relatedTo: ["ant", "honeybee"],
+    },
+    {
+      id: "bamboo",
+      title: "Bamboo",
+      emoji: "🎋",
+      fact: "Bamboo is the fastest-growing plant on Earth — some kinds grow almost a meter in a single day. You could nearly watch it grow!",
+      factSimple: "Bamboo can grow a meter in one day.",
+      more: "Bamboo is actually a giant grass, not a tree. It's strong enough to build houses and bridges, soft enough for pandas to eat — and a panda munches bamboo for up to 14 hours a day.",
+    },
+    {
+      id: "sequoia",
+      title: "Giant Sequoias",
+      emoji: "🌲",
+      fact: "Giant sequoia trees are the biggest living things on land — taller than a 25-story building, with trunks wider than your bedroom, living over 3,000 years.",
+      factSimple: "The biggest tree is taller than a 25-story building.",
+      more: "Their spongy bark grows a meter thick and shrugs off forest fires — in fact, sequoias need fire: the heat pops their cones open to release seeds. Some alive today were seedlings when the pyramids were still new.",
+      relatedTo: ["pyramids", "blue-whale"],
+    },
+    {
+      id: "traveling-seeds",
+      title: "Traveling Seeds",
+      emoji: "🌬️",
+      fact: "Plants can't walk, so their seeds do the traveling: dandelion seeds parachute on the wind, coconuts sail across oceans, and burrs hitchhike on animal fur.",
+      factSimple: "Seeds fly, sail, and hitchhike to new homes.",
+      more: "Some seeds only sprout after passing through a bird's tummy, and squirrels who forget their buried acorns plant thousands of oak trees by accident. A dandelion seed can ride the wind for kilometers.",
+      relatedTo: ["velcro", "wind"],
+    },
+    {
+      id: "photosynthesis",
+      title: "Leaf Kitchens",
+      emoji: "🍃",
+      fact: "Leaves are tiny kitchens: using sunlight, water, and air, they cook sugar for the plant and breathe out the oxygen we need. Every leaf is a little green factory.",
+      factSimple: "Leaves use sunlight to make food and fresh air.",
+      more: "Leaves are green because of chlorophyll, the chemical that catches sunlight. In autumn, trees stop making it — and the hidden yellows and oranges that were there all along finally show through.",
+      relatedTo: ["sun", "plankton"],
+    },
+    {
+      id: "cactus",
+      title: "Cactus",
+      emoji: "🌵",
+      fact: "A big saguaro cactus can drink and store thousands of liters of rainwater, swelling up like an accordion — enough to survive years without rain.",
+      factSimple: "A cactus stores water like a giant bottle.",
+      more: "Cactus spines are actually leaves that turned into needles to save water and guard the plant's precious supply. Saguaros grow so slowly that a 10-year-old cactus may be only as tall as your hand.",
+      relatedTo: ["desert"],
+    },
+    {
+      id: "mushroom",
+      title: "Mushrooms",
+      emoji: "🍄",
+      fact: "Mushrooms aren't plants — they're fungi, closer cousins to animals than to trees! The mushroom you see is just the fruit of a huge hidden web underground.",
+      factSimple: "Mushrooms are not plants at all!",
+      more: "The biggest living thing on Earth is a honey fungus in Oregon whose underground web spreads across 9 square kilometers. Some mushrooms glow in the dark, lighting the forest floor like tiny lamps.",
+      relatedTo: ["talking-trees", "mold"],
+    },
+    {
+      id: "oldest-tree",
+      title: "The Oldest Tree",
+      emoji: "🎄",
+      fact: "A bristlecone pine in California is almost 5,000 years old — it was already growing before the pyramids were built, and it's still alive today.",
+      factSimple: "The oldest tree is almost 5,000 years old.",
+      more: "Scientists keep its exact location secret to protect it. You can read a tree's age in its rings — one ring per year, wide in good years, narrow in hard ones: a diary written in wood.",
+      relatedTo: ["pyramids", "glacier"],
+    },
+  ],
+};

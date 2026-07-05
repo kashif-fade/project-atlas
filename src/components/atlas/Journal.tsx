@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { db } from "@/lib/db";
 import { Explorer, DiscoveryRecord } from "@/lib/types";
 import { museumRooms, totalDiscoveries } from "@/lib/museum/data";
+import { speak } from "@/lib/speech";
 
 type Props = {
   explorer: Explorer;
@@ -82,6 +83,13 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
           <p className="text-slate-500 text-xs">
             Found on {formatDate(selected.foundAt)}
           </p>
+          <button
+            onClick={() => speak(`${selected.title}. ${selected.fact}`)}
+            className="px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm transition mr-3"
+            title="Read it to me"
+          >
+            🔊 Read to me
+          </button>
           <button
             onClick={() => setSelectedId(null)}
             className="text-slate-400 hover:text-white text-sm transition"

@@ -7,6 +7,8 @@ import { Discovery, getFact } from "@/lib/museum/types";
 import { museumRooms, findDiscovery } from "@/lib/museum/data";
 import { getCuratorMessage } from "@/lib/curator";
 import { getTodaysMystery } from "@/lib/mystery";
+import { playDiscover, playMystery, isMuted, setMuted } from "@/lib/sound";
+import { stopSpeaking } from "@/lib/speech";
 import Journal from "./Journal";
 import RoomScene from "./RoomScene";
 
@@ -36,6 +38,7 @@ export default function MuseumView({
   const [discoveringId, setDiscoveringId] = useState<string | null>(null);
   const [justFoundId, setJustFoundId] = useState<string | null>(null);
   const [pendingOpenId, setPendingOpenId] = useState<string | null>(null);
+  const [muted, setMutedState] = useState(isMuted);
 
   const m = getTodaysMystery();
   const mystery: Mystery = {
@@ -96,6 +99,19 @@ export default function MuseumView({
     onExplorerChange(updated);
     setDiscoveringId(null);
     setJustFoundId(d.id);
+
+    if (d.id === mystery.discoveryId) {
+      playMystery();
+    } else {
+      playDiscover();
+    }
+  }
+
+  function toggleMute() {
+    const next = !muted;
+    setMuted(next);
+    setMutedState(next);
+    if (next) stopSpeaking();
   }
 
   function navigateToDiscovery(discoveryId: string) {
@@ -121,6 +137,13 @@ export default function MuseumView({
         </button>
 
         <div className="flex gap-2">
+          <button
+            onClick={toggleMute}
+            className="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition"
+            title={muted ? "Sound off" : "Sound on"}
+          >
+            {muted ? "🔇" : "🔊"}
+          </button>
           <button
             onClick={() => setView("room")}
             className={`px-4 py-2 rounded-lg transition ${
