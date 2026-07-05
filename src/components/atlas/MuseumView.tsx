@@ -7,18 +7,13 @@ import { Discovery, getFact } from "@/lib/museum/types";
 import { museumRooms } from "@/lib/museum/data";
 import { getCuratorMessage } from "@/lib/curator";
 import Journal from "./Journal";
+import RoomScene from "./RoomScene";
 
 type Props = {
   explorer: Explorer;
   onExplorerChange: (updated: Explorer) => void;
   onSwitchProfile: () => void;
 };
-
-function hasFound(explorer: Explorer, d: Discovery) {
-  return (explorer.discoveries || []).some(
-    (r) => r.discoveryId === d.id || r.title === d.title
-  );
-}
 
 export default function MuseumView({
   explorer,
@@ -29,17 +24,32 @@ export default function MuseumView({
   const [view, setView] = useState<"room" | "journal">("room");
   const [discoveringId, setDiscoveringId] = useState<string | null>(null);
   const [justFoundId, setJustFoundId] = useState<string | null>(null);
-  const [moreOpenId, setMoreOpenId] = useState<string | null>(null);
 
   const room = museumRooms[roomIndex];
   const level = explorer.readingLevel || "advanced";
   const discoveryCount = explorer.discoveries?.length || 0;
+
+  const foundIds = new Set(
+    (explorer.discoveries || [])
+      .map((r) => r.discoveryId)
+      .filter((id): id is string => Boolean(id))
+  );
+  // Legacy records (pre-session-2) stored no discoveryId; match by title.
+  const foundTitles = new Set(
+    (explorer.discoveries || []).map((r) => r.title)
+  );
+  for (const r of museumRooms) {
+    for (const d of r.discoveries) {
+      if (foundTitles.has(d.title)) foundIds.add(d.id);
+    }
+  }
+
   const foundInRoom = room.discoveries.filter((d) =>
-    hasFound(explorer, d)
+    foundIds.has(d.id)
   ).length;
 
   async function discover(d: Discovery) {
-    if (hasFound(explorer, d) || discoveringId) return;
+    if (foundIds.has(d.id) || discoveringId) return;
 
     setDiscoveringId(d.id);
     // A small pause makes discovery feel like an event, not a click.
@@ -51,7 +61,6 @@ export default function MuseumView({
       title: d.title,
       fact: getFact(d, level),
       emoji: d.emoji,
-      // eslint-disable-next-line react-hooks/purity -- event handler, impurity is fine
       foundAt: Date.now(),
     };
 
@@ -67,7 +76,7 @@ export default function MuseumView({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <button
@@ -102,16 +111,13 @@ export default function MuseumView({
       {view === "journal" && <Journal explorer={explorer} />}
 
       {view === "room" && (
-        <div className="text-center space-y-6">
+        <div className="text-center space-y-4">
           {/* Room navigation */}
           <div className="flex justify-center gap-2 flex-wrap">
             {museumRooms.map((r, i) => (
               <button
                 key={r.id}
-                onClick={() => {
-                  setRoomIndex(i);
-                  setMoreOpenId(null);
-                }}
+                onClick={() => setRoomIndex(i)}
                 className={`px-3 py-2 rounded-lg text-sm transition ${
                   i === roomIndex
                     ? "bg-slate-700"
@@ -128,76 +134,25 @@ export default function MuseumView({
               {room.emoji} {room.name}
             </h1>
             <p className="text-slate-500 text-sm mt-1">
-              {foundInRoom} of {room.discoveries.length} wonders found
+              {foundInRoom} of {room.discoveries.length} wonders found —
+              tap the sparkling ones!
             </p>
           </div>
 
-          {/* Exhibits */}
-          {room.discoveries.map((d) => {
-            const found = hasFound(explorer, d);
-            const isDiscovering = discoveringId === d.id;
-            const moreOpen = moreOpenId === d.id;
-
-            return (
-              <div
-                key={d.id}
-                className={`border rounded-xl p-6 space-y-3 transition ${
-                  found
-                    ? "bg-slate-900 border-slate-700"
-                    : "bg-slate-950 border-slate-800"
-                }`}
-              >
-                <div className={`text-4xl ${found ? "" : "opacity-60"}`}>
-                  {d.emoji}
-                </div>
-                <h2 className="text-xl">{d.title}</h2>
-
-                {found ? (
-                  <>
-                    <p className="text-slate-300">{getFact(d, level)}</p>
-
-                    {d.more && (
-                      <button
-                        onClick={() => setMoreOpenId(moreOpen ? null : d.id)}
-                        className="text-sm text-sky-400 hover:text-sky-300 transition"
-                      >
-                        {moreOpen ? "▾ That's amazing!" : "▸ Tell me more"}
-                      </button>
-                    )}
-
-                    {moreOpen && d.more && (
-                      <p className="text-slate-400 text-sm text-left bg-slate-950 rounded-lg p-4">
-                        {d.more}
-                      </p>
-                    )}
-
-                    <p className="text-emerald-400 text-sm">
-                      {justFoundId === d.id
-                        ? "✨ Added to your Journal!"
-                        : "✓ In your Journal"}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-slate-500 italic text-sm">
-                      What secret does the {d.title.toLowerCase()} hold?
-                    </p>
-                    <button
-                      onClick={() => discover(d)}
-                      disabled={isDiscovering}
-                      className="mt-1 px-5 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-60 transition"
-                    >
-                      {isDiscovering ? "Discovering..." : "🔍 Discover"}
-                    </button>
-                  </>
-                )}
-              </div>
-            );
-          })}
+          <RoomScene
+            key={room.id}
+            room={room}
+            roomIndex={roomIndex}
+            level={level}
+            foundIds={foundIds}
+            discoveringId={discoveringId}
+            justFoundId={justFoundId}
+            onDiscover={discover}
+          />
 
           {/* Curator */}
           {discoveryCount > 0 && (
-            <p className="text-slate-500 italic text-sm pt-4">
+            <p className="text-slate-500 italic text-sm pt-2">
               🎩 {getCuratorMessage(discoveryCount, room.name)}
             </p>
           )}

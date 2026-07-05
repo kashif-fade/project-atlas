@@ -45,7 +45,7 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
 |---|---------|--------|-------|
 | 1 | Foundation: componentize, profile picker, dedupe, wire Curator | ✅ Done | commit 315da31 |
 | 2 | Content engine: layered facts, reading levels, 60 discoveries, 6 rooms | ✅ Done | 6 rooms × 10 discoveries |
-| 3 | Hidden-object rooms: scene layouts, tap-to-reveal, animation | ⬜ Planned | makes it a *game* |
+| 3 | Hidden-object rooms: scene layouts, tap-to-reveal, animation | ✅ Done | RoomScene + framer-motion |
 | 4 | Journal as collection: wings, progress fill, favorites | ⬜ Planned | ownership, not points |
 | 5 | Curator memory + daily mystery exhibit + fact connections | ⬜ Planned | reason to return, no streaks |
 | 6 | Content scale-up (~180 discoveries), read-aloud (Web Speech), sound | ⬜ Planned | hold ~30% for week-3 "new wing" drop |
@@ -69,3 +69,8 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
   on the host machine.
 - Windows↔sandbox file sync can NUL-pad or truncate files; prefer writing
   source via sandbox-side heredoc and re-verify with tsc.
+
+- **2026-07-05 — Session 3**: hidden-object room scenes — per-room gradient
+  backdrops, discoveries scattered as bobbing/sparkling tappable objects,
+  animated exhibit card modal (spring reveal, wiggle while discovering,
+  expandable Tell me more), legacy journal records matched by title.
