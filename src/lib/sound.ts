@@ -75,6 +75,24 @@ export function playDiscover() {
   tone(1046.5, 0.3, 0.35, "sine");    // C6
 }
 
+/** Happy chime when a match is made in the matching game */
+export function playMatch() {
+  tone(659.25, 0, 0.12, "sine");     // E5
+  tone(783.99, 0.09, 0.12, "sine");  // G5
+  tone(1046.5, 0.18, 0.25, "sine");  // C6
+}
+
+/** Soft, kind "not quite" — two gentle low tones, never harsh */
+export function playOops() {
+  tone(392.0, 0, 0.15, "sine", 0.06);   // G4
+  tone(329.63, 0.14, 0.22, "sine", 0.05); // E4
+}
+
+/** Shared AudioContext for other audio modules (music) */
+export function getAudioCtx() {
+  return getCtx();
+}
+
 /** Extra shimmer for today's mystery */
 export function playMystery() {
   playDiscover();

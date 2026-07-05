@@ -6,6 +6,8 @@ import { Explorer } from "@/lib/types";
 import type { ReadingLevel } from "@/lib/museum/types";
 import { getCuratorGreeting } from "@/lib/curator";
 import { dedupeDiscoveries } from "@/lib/migrate";
+import { initSpeech } from "@/lib/speech";
+import { isMusicOn, startMusic } from "@/lib/music";
 import ProfilePicker from "@/components/atlas/ProfilePicker";
 import Onboarding from "@/components/atlas/Onboarding";
 import MuseumView from "@/components/atlas/MuseumView";
@@ -39,7 +41,13 @@ export default function Home() {
     };
 
     load();
+    initSpeech();
   }, []);
+
+  function maybeStartMusic() {
+    // AudioContext needs a user gesture; profile selection is one.
+    if (isMusicOn()) startMusic();
+  }
 
   async function handleCreate(
     name: string,
@@ -61,6 +69,7 @@ export default function Home() {
     setExplorers((prev) => [...prev, newExplorer]);
     setExplorer(newExplorer);
     setGreeting(getCuratorGreeting(name, undefined, null, now));
+    maybeStartMusic();
     setScreen("museum");
   }
 
@@ -75,6 +84,7 @@ export default function Home() {
     await db.explorers.put(updated);
     setExplorer(updated);
     setGreeting(getCuratorGreeting(selected.name, prevVisitAt, lastFound, now));
+    maybeStartMusic();
     setScreen("museum");
   }
 

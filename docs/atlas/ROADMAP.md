@@ -50,7 +50,7 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
 | 5 | Curator memory + daily mystery exhibit + fact connections | ✅ Done | greeting, 🔮 daily hint, chips |
 | 6 | Content scale-up (120 authored: 100 live + 20 vaulted), read-aloud, sound | ✅ Done | vault flip documented in data.ts |
 | 7 | Polish: tablet/phone layout, transitions, kid-proofing | ✅ Done | arrows, chips, touch targets |
-| 8 | Playtest iteration with the kid | ⬜ Planned | non-negotiable |
+| 8 | Playtest iteration with the kid | ✅ Done | 5 findings, all fixed |
 
 ## Changelog
 
@@ -103,3 +103,14 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
   app icons (golden wonder-sparkle on night gradient; favicon, apple-icon,
   192/512 + maskable), iOS standalone meta. "Add to Home Screen" on iPhone
   now installs Atlas like a real app. Deploy target: Vercel.
+
+- **2026-07-05 — Session 8 (playtest fixes)**: first real playtest! Her
+  findings → fixes: (1) profile privacy → 3-emoji secret code per explorer,
+  gate at picker, set/change/remove in Journal settings; (2) wants more
+  interaction → Curator's Match game (🎲 Play tab): match her OWN discovered
+  wonders to names or facts, no scores/timers, wrong guesses just wiggle;
+  (3) seahorse/jellyfish emoji wrong → hand-drawn SVG creatures via new
+  Discovery.image + WonderIcon; (4) voice went drawly mid-session → voice
+  is now quality-ranked and locked once (voices load async; the old code
+  re-picked badly); (5) wants music → gentle generative WebAudio pentatonic
+  ambient, 🎵 toggle, persisted, default on.

@@ -6,6 +6,7 @@ import type { Discovery, MuseumRoom, ReadingLevel } from "@/lib/museum/types";
 import { getFact } from "@/lib/museum/types";
 import { findDiscovery } from "@/lib/museum/data";
 import { playPop } from "@/lib/sound";
+import WonderIcon from "./WonderIcon";
 import { speak, stopSpeaking } from "@/lib/speech";
 
 type Props = {
@@ -145,7 +146,7 @@ export default function RoomScene({
                 found ? "opacity-90" : ""
               }`}
             >
-              {d.emoji}
+              <WonderIcon wonder={d} />
             </span>
             {found ? (
               <span className="absolute -top-1 -right-1 text-xs bg-emerald-600 rounded-full w-5 h-5 flex items-center justify-center">
@@ -201,7 +202,7 @@ export default function RoomScene({
                     : {}
                 }
               >
-                {selected.emoji}
+                <WonderIcon wonder={selected} />
               </motion.div>
 
               <h2 className="text-2xl font-light">{selected.title}</h2>

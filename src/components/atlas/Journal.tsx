@@ -4,8 +4,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { db } from "@/lib/db";
 import { Explorer, DiscoveryRecord } from "@/lib/types";
-import { museumRooms, totalDiscoveries, findDiscovery } from "@/lib/museum/data";
+import {
+  museumRooms,
+  totalDiscoveries,
+  findDiscovery,
+} from "@/lib/museum/data";
 import { speak } from "@/lib/speech";
+import WonderIcon from "./WonderIcon";
+import EmojiCodeInput from "./EmojiCode";
 
 type Props = {
   explorer: Explorer;
@@ -19,17 +25,21 @@ function formatDate(ts: number) {
   });
 }
 
-/** Prefer the current pack emoji — stored records may hold outdated glyphs */
-function displayEmoji(r: DiscoveryRecord) {
+/** Prefer the current pack art — stored records may hold outdated glyphs */
+function iconFor(r: DiscoveryRecord) {
   if (r.discoveryId) {
     const found = findDiscovery(r.discoveryId);
-    if (found) return found.discovery.emoji;
+    if (found) return found.discovery;
   }
-  return r.emoji;
+  return { emoji: r.emoji, title: r.title };
 }
+
+type CodeStep = "closed" | "verify" | "set";
 
 export default function Journal({ explorer, onExplorerChange }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [codeStep, setCodeStep] = useState<CodeStep>("closed");
+  const [codeWrong, setCodeWrong] = useState(false);
 
   const records = explorer.discoveries || [];
 
@@ -50,6 +60,14 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
     };
     await db.explorers.put(updated);
     onExplorerChange(updated);
+  }
+
+  async function saveCode(code: string | undefined) {
+    const updated: Explorer = { ...explorer, secretCode: code };
+    await db.explorers.put(updated);
+    onExplorerChange(updated);
+    setCodeStep("closed");
+    setCodeWrong(false);
   }
 
   return (
@@ -78,7 +96,9 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="flex items-start justify-between">
-            <div className="text-4xl">{displayEmoji(selected)}</div>
+            <div className="text-4xl">
+              <WonderIcon wonder={iconFor(selected)} />
+            </div>
             <button
               onClick={() => toggleFavorite(selected)}
               className="text-2xl p-1"
@@ -120,7 +140,7 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
                 className="text-3xl bg-slate-900 border border-amber-700/50 rounded-xl p-3 hover:bg-slate-800 transition"
                 title={r.title}
               >
-                {displayEmoji(r)}
+                <WonderIcon wonder={iconFor(r)} />
               </button>
             ))}
           </div>
@@ -169,7 +189,7 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
                     }`}
                     title={discovery.title}
                   >
-                    {discovery.emoji}
+                    <WonderIcon wonder={discovery} />
                     {record.favorite && (
                       <span className="absolute -top-1 -right-1 text-xs">
                         ⭐
@@ -190,6 +210,85 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
           </div>
         );
       })}
+
+      {/* Secret code settings */}
+      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 space-y-4">
+        {codeStep === "closed" && (
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-slate-400">
+              {explorer.secretCode
+                ? "🔒 Your museum is protected by a secret code."
+                : "🔓 Anyone can open your museum right now."}
+            </p>
+            <button
+              onClick={() => {
+                setCodeWrong(false);
+                setCodeStep(explorer.secretCode ? "verify" : "set");
+              }}
+              className="shrink-0 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm transition"
+            >
+              {explorer.secretCode ? "Change code" : "Set secret code"}
+            </button>
+          </div>
+        )}
+
+        {codeStep === "verify" && (
+          <>
+            <EmojiCodeInput
+              prompt={
+                codeWrong
+                  ? "Not quite — try your current code again!"
+                  : "First, enter your current secret code."
+              }
+              onComplete={(code) => {
+                if (code === explorer.secretCode) {
+                  setCodeWrong(false);
+                  setCodeStep("set");
+                  return true;
+                }
+                setCodeWrong(true);
+                return false;
+              }}
+            />
+            <div className="text-center">
+              <button
+                onClick={() => setCodeStep("closed")}
+                className="text-slate-400 hover:text-white text-sm transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </>
+        )}
+
+        {codeStep === "set" && (
+          <>
+            <EmojiCodeInput
+              prompt="Tap 3 emojis — that's your new secret code. Remember it!"
+              onComplete={(code) => {
+                saveCode(code);
+                return true;
+              }}
+            />
+            <div className="flex justify-center gap-4">
+              {explorer.secretCode && (
+                <button
+                  onClick={() => saveCode(undefined)}
+                  className="text-amber-400/90 hover:text-amber-300 text-sm transition"
+                >
+                  Remove code
+                </button>
+              )}
+              <button
+                onClick={() => setCodeStep("closed")}
+                className="text-slate-400 hover:text-white text-sm transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

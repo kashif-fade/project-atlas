@@ -8,9 +8,11 @@ import { museumRooms, findDiscovery } from "@/lib/museum/data";
 import { getCuratorMessage } from "@/lib/curator";
 import { getTodaysMystery } from "@/lib/mystery";
 import { playDiscover, playMystery, isMuted, setMuted } from "@/lib/sound";
+import { isMusicOn, setMusicOn } from "@/lib/music";
 import { stopSpeaking } from "@/lib/speech";
 import Journal from "./Journal";
 import RoomScene from "./RoomScene";
+import MatchGame from "./MatchGame";
 
 type Props = {
   explorer: Explorer;
@@ -34,11 +36,12 @@ export default function MuseumView({
   onSwitchProfile,
 }: Props) {
   const [roomIndex, setRoomIndex] = useState(0);
-  const [view, setView] = useState<"room" | "journal">("room");
+  const [view, setView] = useState<"room" | "journal" | "play">("room");
   const [discoveringId, setDiscoveringId] = useState<string | null>(null);
   const [justFoundId, setJustFoundId] = useState<string | null>(null);
   const [pendingOpenId, setPendingOpenId] = useState<string | null>(null);
   const [muted, setMutedState] = useState(isMuted);
+  const [musicOn, setMusicOnState] = useState(isMusicOn);
 
   const m = getTodaysMystery();
   const mystery: Mystery = {
@@ -114,6 +117,12 @@ export default function MuseumView({
     if (next) stopSpeaking();
   }
 
+  function toggleMusic() {
+    const next = !musicOn;
+    setMusicOn(next);
+    setMusicOnState(next);
+  }
+
   function stepRoom(delta: number) {
     setPendingOpenId(null);
     setRoomIndex(
@@ -143,29 +152,46 @@ export default function MuseumView({
           <span className="text-slate-400">{explorer.name}</span>
         </button>
 
-        <div className="flex gap-2">
+        <div className="flex gap-1.5 sm:gap-2">
           <button
             onClick={toggleMute}
-            className="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition"
-            title={muted ? "Sound off" : "Sound on"}
+            className="px-2.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition"
+            title={muted ? "Sound effects off" : "Sound effects on"}
           >
             {muted ? "🔇" : "🔊"}
           </button>
           <button
+            onClick={toggleMusic}
+            className={`px-2.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition ${
+              musicOn ? "" : "opacity-40"
+            }`}
+            title={musicOn ? "Music on" : "Music off"}
+          >
+            🎵
+          </button>
+          <button
             onClick={() => setView("room")}
-            className={`px-4 py-2 rounded-lg transition ${
+            className={`px-3 py-2 rounded-lg transition ${
               view === "room" ? "bg-slate-700" : "bg-slate-900 hover:bg-slate-800"
             }`}
           >
-            🏛️ Museum
+            🏛️<span className="hidden sm:inline"> Museum</span>
           </button>
           <button
             onClick={() => setView("journal")}
-            className={`px-4 py-2 rounded-lg transition ${
+            className={`px-3 py-2 rounded-lg transition ${
               view === "journal" ? "bg-slate-700" : "bg-slate-900 hover:bg-slate-800"
             }`}
           >
-            📖 Journal
+            📖<span className="hidden sm:inline"> Journal</span>
+          </button>
+          <button
+            onClick={() => setView("play")}
+            className={`px-3 py-2 rounded-lg transition ${
+              view === "play" ? "bg-slate-700" : "bg-slate-900 hover:bg-slate-800"
+            }`}
+          >
+            🎲<span className="hidden sm:inline"> Play</span>
           </button>
         </div>
       </div>
@@ -180,6 +206,8 @@ export default function MuseumView({
       {view === "journal" && (
         <Journal explorer={explorer} onExplorerChange={onExplorerChange} />
       )}
+
+      {view === "play" && <MatchGame explorer={explorer} />}
 
       {view === "room" && (
         <div className="text-center space-y-4">

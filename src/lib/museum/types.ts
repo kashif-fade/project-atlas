@@ -8,6 +8,9 @@ export type Discovery = {
   factSimple: string;
   /** Optional deeper "Tell me more" text */
   more?: string;
+  /** Optional image (public path) used instead of the emoji, for wonders
+   *  with no good emoji (e.g. seahorse, jellyfish) */
+  image?: string;
   /** Future knowledge-graph links (discovery ids) */
   relatedTo?: string[];
 };

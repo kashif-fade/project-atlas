@@ -8,6 +8,8 @@ export type Explorer = {
   lastVisitAt?: number;
   /** Which fact text this explorer sees; defaults to "advanced" */
   readingLevel?: ReadingLevel;
+  /** 3-emoji secret code protecting this profile (optional) */
+  secretCode?: string;
   discoveries?: DiscoveryRecord[];
 };
 
