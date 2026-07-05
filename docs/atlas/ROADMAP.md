@@ -47,7 +47,7 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
 | 2 | Content engine: layered facts, reading levels, 60 discoveries, 6 rooms | ✅ Done | 6 rooms × 10 discoveries |
 | 3 | Hidden-object rooms: scene layouts, tap-to-reveal, animation | ✅ Done | RoomScene + framer-motion |
 | 4 | Journal as collection: wings, progress fill, favorites | ✅ Done | tile grids + starring |
-| 5 | Curator memory + daily mystery exhibit + fact connections | ⬜ Planned | reason to return, no streaks |
+| 5 | Curator memory + daily mystery exhibit + fact connections | ✅ Done | greeting, 🔮 daily hint, chips |
 | 6 | Content scale-up (~180 discoveries), read-aloud (Web Speech), sound | ⬜ Planned | hold ~30% for week-3 "new wing" drop |
 | 7 | Polish: tablet/phone layout, transitions, kid-proofing | ⬜ Planned | |
 | 8 | Playtest iteration with the kid | ⬜ Planned | non-negotiable |
@@ -78,3 +78,8 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
 - **2026-07-05 — Session 4**: journal rebuilt as a personal museum — per-room
   wings with animated progress bars, emoji tile grids (dimmed ❓ for unfound),
   detail card with found date, favorites starring + favorites shelf.
+
+- **2026-07-05 — Session 5**: Curator memory (personalized greeting by name,
+  time since last visit, last discovery), deterministic daily mystery exhibit
+  (hint line, golden pulsing ring, celebration on find — no streaks), and
+  connected-wonder chips in exhibit cards with cross-room navigation.

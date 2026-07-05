@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Discovery, MuseumRoom, ReadingLevel } from "@/lib/museum/types";
 import { getFact } from "@/lib/museum/types";
+import { findDiscovery } from "@/lib/museum/data";
 
 type Props = {
   room: MuseumRoom;
@@ -12,7 +13,13 @@ type Props = {
   foundIds: Set<string>;
   discoveringId: string | null;
   justFoundId: string | null;
+  /** Today's mystery discovery id (golden ring if in this room) */
+  mysteryId?: string | null;
+  /** Open this exhibit immediately on mount (cross-room navigation) */
+  initialOpenId?: string | null;
   onDiscover: (d: Discovery) => void;
+  /** Navigate to a discovery in another room */
+  onNavigate: (discoveryId: string) => void;
 };
 
 /** Scattered spots (percentages) — rotated per room so layouts differ */
@@ -45,9 +52,16 @@ export default function RoomScene({
   foundIds,
   discoveringId,
   justFoundId,
+  mysteryId,
+  initialOpenId,
   onDiscover,
+  onNavigate,
 }: Props) {
-  const [selected, setSelected] = useState<Discovery | null>(null);
+  const [selected, setSelected] = useState<Discovery | null>(() =>
+    initialOpenId
+      ? room.discoveries.find((d) => d.id === initialOpenId) || null
+      : null
+  );
   const [moreOpen, setMoreOpen] = useState(false);
 
   const bg = SCENE_BG[room.id] || "bg-slate-900";
@@ -65,6 +79,14 @@ export default function RoomScene({
 
   const selectedFound = selected ? foundIds.has(selected.id) : false;
   const selectedDiscovering = selected ? discoveringId === selected.id : false;
+  const selectedIsMystery = selected ? selected.id === mysteryId : false;
+
+  const related =
+    selected && selectedFound && selected.relatedTo
+      ? selected.relatedTo
+          .map((id) => findDiscovery(id))
+          .filter((x): x is NonNullable<typeof x> => Boolean(x))
+      : [];
 
   return (
     <div
@@ -75,6 +97,7 @@ export default function RoomScene({
       {room.discoveries.map((d, i) => {
         const spot = SPOTS[(i + roomIndex * 3) % SPOTS.length];
         const found = foundIds.has(d.id);
+        const isMystery = d.id === mysteryId && !found;
 
         return (
           <motion.button
@@ -96,6 +119,13 @@ export default function RoomScene({
             whileTap={{ scale: 1.25 }}
             aria-label={found ? `${d.title} (found)` : "Something to discover"}
           >
+            {isMystery && (
+              <motion.span
+                className="absolute inset-0 rounded-full border-2 border-amber-400"
+                animate={{ scale: [1, 1.25, 1], opacity: [0.9, 0.3, 0.9] }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+              />
+            )}
             <span
               className={`block text-4xl drop-shadow-lg ${
                 found ? "opacity-90" : ""
@@ -111,7 +141,11 @@ export default function RoomScene({
               <motion.span
                 className="absolute -top-2 -right-2 text-sm"
                 animate={{ opacity: [1, 0.2, 1], scale: [1, 1.25, 1] }}
-                transition={{ duration: 1.8, repeat: Infinity, delay: (i % 4) * 0.5 }}
+                transition={{
+                  duration: 1.8,
+                  repeat: Infinity,
+                  delay: (i % 4) * 0.5,
+                }}
               >
                 ✨
               </motion.span>
@@ -186,14 +220,52 @@ export default function RoomScene({
                     )}
                   </AnimatePresence>
 
+                  {related.length > 0 && (
+                    <div className="space-y-2 pt-1">
+                      <p className="text-xs text-slate-500">
+                        Connected wonders
+                      </p>
+                      <div className="flex flex-wrap justify-center gap-2">
+                        {related.map(({ discovery, room: r }) => (
+                          <button
+                            key={discovery.id}
+                            onClick={() => {
+                              if (r.id === room.id) {
+                                openExhibit(discovery);
+                              } else {
+                                onNavigate(discovery.id);
+                              }
+                            }}
+                            className="px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm transition"
+                          >
+                            {discovery.emoji} {discovery.title}
+                            {r.id !== room.id && (
+                              <span className="text-slate-500">
+                                {" "}
+                                · {r.emoji}
+                              </span>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <p className="text-emerald-400 text-sm">
                     {justFoundId === selected.id
-                      ? "✨ Added to your Journal!"
+                      ? selectedIsMystery
+                        ? "🌟 You found today's mystery!"
+                        : "✨ Added to your Journal!"
                       : "✓ In your Journal"}
                   </p>
                 </>
               ) : (
                 <>
+                  {selectedIsMystery && (
+                    <p className="text-amber-400 text-sm">
+                      🌟 Today&apos;s mystery!
+                    </p>
+                  )}
                   <p className="text-slate-400 italic">
                     What secret does the {selected.title.toLowerCase()} hold?
                   </p>

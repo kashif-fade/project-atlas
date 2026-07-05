@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/db";
 import { Explorer } from "@/lib/types";
 import type { ReadingLevel } from "@/lib/museum/types";
+import { getCuratorGreeting } from "@/lib/curator";
 import ProfilePicker from "@/components/atlas/ProfilePicker";
 import Onboarding from "@/components/atlas/Onboarding";
 import MuseumView from "@/components/atlas/MuseumView";
@@ -14,6 +15,7 @@ export default function Home() {
   const [screen, setScreen] = useState<Screen>("loading");
   const [explorers, setExplorers] = useState<Explorer[]>([]);
   const [explorer, setExplorer] = useState<Explorer | null>(null);
+  const [greeting, setGreeting] = useState<string | null>(null);
 
   useEffect(() => {
     db.explorers.toArray().then((all) => {
@@ -27,12 +29,13 @@ export default function Home() {
     avatar: string,
     readingLevel: ReadingLevel
   ) {
+    const now = Date.now();
     const newExplorer: Explorer = {
       id: crypto.randomUUID(),
       name,
       avatar,
-      createdAt: Date.now(),
-      lastVisitAt: Date.now(),
+      createdAt: now,
+      lastVisitAt: now,
       readingLevel,
       discoveries: [],
     };
@@ -40,13 +43,21 @@ export default function Home() {
     await db.explorers.add(newExplorer);
     setExplorers((prev) => [...prev, newExplorer]);
     setExplorer(newExplorer);
+    setGreeting(getCuratorGreeting(name, undefined, null, now));
     setScreen("museum");
   }
 
   async function handleSelect(selected: Explorer) {
-    const updated = { ...selected, lastVisitAt: Date.now() };
+    const now = Date.now();
+    const prevVisitAt = selected.lastVisitAt;
+    const records = selected.discoveries || [];
+    const lastFound =
+      records.length > 0 ? records[records.length - 1].title : null;
+
+    const updated = { ...selected, lastVisitAt: now };
     await db.explorers.put(updated);
     setExplorer(updated);
+    setGreeting(getCuratorGreeting(selected.name, prevVisitAt, lastFound, now));
     setScreen("museum");
   }
 
@@ -59,6 +70,7 @@ export default function Home() {
 
   function handleSwitchProfile() {
     setExplorer(null);
+    setGreeting(null);
     setScreen("picker");
   }
 
@@ -90,6 +102,7 @@ export default function Home() {
         {screen === "museum" && explorer && (
           <MuseumView
             explorer={explorer}
+            greeting={greeting}
             onExplorerChange={handleExplorerChange}
             onSwitchProfile={handleSwitchProfile}
           />

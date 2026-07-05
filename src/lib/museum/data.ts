@@ -20,3 +20,12 @@ export const totalDiscoveries = museumRooms.reduce(
   (sum, room) => sum + room.discoveries.length,
   0
 );
+
+/** Flat index of every discovery with its room, for lookups and navigation */
+export const allDiscoveries = museumRooms.flatMap((room) =>
+  room.discoveries.map((discovery) => ({ discovery, room }))
+);
+
+export function findDiscovery(id: string) {
+  return allDiscoveries.find((x) => x.discovery.id === id);
+}

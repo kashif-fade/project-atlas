@@ -1,3 +1,33 @@
+/** "The Deep Sea" -> "deep sea", for use mid-sentence */
+function casual(title: string) {
+  return title.replace(/^The /, "").toLowerCase();
+}
+
+export function getCuratorGreeting(
+  name: string,
+  prevVisitAt: number | undefined,
+  lastFoundTitle: string | null,
+  now: number
+) {
+  if (!prevVisitAt) {
+    return `A new Explorer! The Museum opens its doors for ${name}.`;
+  }
+
+  const hoursAway = (now - prevVisitAt) / 36e5;
+
+  if (hoursAway < 8) {
+    return lastFoundTitle
+      ? `Back so soon, ${name}? The ${casual(lastFoundTitle)} was just telling the others about you.`
+      : `Back so soon, ${name}? The Museum is delighted.`;
+  }
+
+  if (lastFoundTitle) {
+    return `Welcome back, ${name}. Still thinking about the ${casual(lastFoundTitle)}?`;
+  }
+
+  return `Welcome back, ${name}. The halls kept your place.`;
+}
+
 export function getCuratorMessage(discoveryCount: number, lastRoom: string) {
   if (discoveryCount === 1) {
     return "A first discovery. Every journey begins quietly.";

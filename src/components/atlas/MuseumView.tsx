@@ -4,19 +4,30 @@ import { useState } from "react";
 import { db } from "@/lib/db";
 import { Explorer, DiscoveryRecord } from "@/lib/types";
 import { Discovery, getFact } from "@/lib/museum/types";
-import { museumRooms } from "@/lib/museum/data";
+import { museumRooms, findDiscovery } from "@/lib/museum/data";
 import { getCuratorMessage } from "@/lib/curator";
+import { getTodaysMystery } from "@/lib/mystery";
 import Journal from "./Journal";
 import RoomScene from "./RoomScene";
 
 type Props = {
   explorer: Explorer;
+  greeting?: string | null;
   onExplorerChange: (updated: Explorer) => void;
   onSwitchProfile: () => void;
 };
 
+type Mystery = {
+  discoveryId: string;
+  title: string;
+  roomId: string;
+  roomName: string;
+  roomEmoji: string;
+};
+
 export default function MuseumView({
   explorer,
+  greeting,
   onExplorerChange,
   onSwitchProfile,
 }: Props) {
@@ -24,6 +35,16 @@ export default function MuseumView({
   const [view, setView] = useState<"room" | "journal">("room");
   const [discoveringId, setDiscoveringId] = useState<string | null>(null);
   const [justFoundId, setJustFoundId] = useState<string | null>(null);
+  const [pendingOpenId, setPendingOpenId] = useState<string | null>(null);
+
+  const m = getTodaysMystery();
+  const mystery: Mystery = {
+    discoveryId: m.discovery.id,
+    title: m.discovery.title,
+    roomId: m.room.id,
+    roomName: m.room.name,
+    roomEmoji: m.room.emoji,
+  };
 
   const room = museumRooms[roomIndex];
   const level = explorer.readingLevel || "advanced";
@@ -47,6 +68,8 @@ export default function MuseumView({
   const foundInRoom = room.discoveries.filter((d) =>
     foundIds.has(d.id)
   ).length;
+
+  const mysteryFound = foundIds.has(mystery.discoveryId);
 
   async function discover(d: Discovery) {
     if (foundIds.has(d.id) || discoveringId) return;
@@ -73,6 +96,15 @@ export default function MuseumView({
     onExplorerChange(updated);
     setDiscoveringId(null);
     setJustFoundId(d.id);
+  }
+
+  function navigateToDiscovery(discoveryId: string) {
+    const target = findDiscovery(discoveryId);
+    if (!target) return;
+    const idx = museumRooms.findIndex((r) => r.id === target.room.id);
+    if (idx === -1) return;
+    setPendingOpenId(discoveryId);
+    setRoomIndex(idx);
   }
 
   return (
@@ -108,6 +140,13 @@ export default function MuseumView({
         </div>
       </div>
 
+      {/* Curator greeting */}
+      {greeting && (
+        <p className="text-slate-400 italic text-sm text-center bg-slate-900/60 border border-slate-800 rounded-xl px-4 py-3">
+          🎩 {greeting}
+        </p>
+      )}
+
       {view === "journal" && (
         <Journal explorer={explorer} onExplorerChange={onExplorerChange} />
       )}
@@ -119,7 +158,10 @@ export default function MuseumView({
             {museumRooms.map((r, i) => (
               <button
                 key={r.id}
-                onClick={() => setRoomIndex(i)}
+                onClick={() => {
+                  setPendingOpenId(null);
+                  setRoomIndex(i);
+                }}
                 className={`px-3 py-2 rounded-lg text-sm transition ${
                   i === roomIndex
                     ? "bg-slate-700"
@@ -130,6 +172,17 @@ export default function MuseumView({
               </button>
             ))}
           </div>
+
+          {/* Daily mystery hint */}
+          {(
+            <p className="text-amber-400/90 text-sm">
+              {mysteryFound
+                ? `🌟 You found today's mystery — the ${mystery.title}!`
+                : mystery.roomId === room.id
+                  ? "🔮 Today's mystery hides somewhere in this very room..."
+                  : `🔮 Today's mystery hides in the ${mystery.roomEmoji} ${mystery.roomName}...`}
+            </p>
+          )}
 
           <div>
             <h1 className="text-2xl font-light">
@@ -142,14 +195,17 @@ export default function MuseumView({
           </div>
 
           <RoomScene
-            key={room.id}
+            key={`${room.id}:${pendingOpenId || ""}`}
             room={room}
             roomIndex={roomIndex}
             level={level}
             foundIds={foundIds}
             discoveringId={discoveringId}
             justFoundId={justFoundId}
+            mysteryId={mystery.discoveryId}
+            initialOpenId={pendingOpenId}
             onDiscover={discover}
+            onNavigate={navigateToDiscovery}
           />
 
           {/* Curator */}
