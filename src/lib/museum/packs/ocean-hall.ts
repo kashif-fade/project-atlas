@@ -35,7 +35,7 @@ export const oceanHall: MuseumRoom = {
     {
       id: "coral-reef",
       title: "Coral Reef",
-      emoji: "🪸",
+      emoji: "🐠",
       fact: "Coral looks like colorful rock, but it is actually built by millions of tiny animals called polyps. Reefs are home to a quarter of all ocean life.",
       factSimple: "Coral is made by tiny animals, not rocks!",
       more: "The Great Barrier Reef in Australia is so big it can be seen from space. Corals get their bright colors from tiny algae living inside them — the coral gives the algae a home, and the algae make food from sunlight.",
@@ -61,7 +61,7 @@ export const oceanHall: MuseumRoom = {
     {
       id: "jellyfish",
       title: "Jellyfish",
-      emoji: "🪼",
+      emoji: "🎐",
       fact: "Jellyfish have no brain, no heart, and no bones — they are 95% water — yet they have glided through the oceans for over 500 million years.",
       factSimple: "A jellyfish has no brain and is mostly water!",
       more: "Some jellyfish glow in the dark, and one tiny kind — the 'immortal jellyfish' — can turn itself back into a baby when it gets old, starting life over again. Scientists are still trying to understand how.",

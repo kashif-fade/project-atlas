@@ -3,7 +3,7 @@ import { MuseumRoom } from "../types";
 export const humanBody: MuseumRoom = {
   id: "human-body",
   name: "Human Body Hall",
-  emoji: "🫀",
+  emoji: "💪",
   discoveries: [
     {
       id: "heart",

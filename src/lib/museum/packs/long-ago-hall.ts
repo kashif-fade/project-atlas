@@ -17,7 +17,7 @@ export const longAgoHall: MuseumRoom = {
     {
       id: "mummies",
       title: "Mummies",
-      emoji: "🇪🇬",
+      emoji: "⚱️",
       fact: "Ancient Egyptians preserved their kings and queens as mummies, wrapped in hundreds of meters of linen, so they could journey to the next world.",
       factSimple: "Mummies were wrapped in hundreds of meters of cloth.",
       more: "Egyptians mummified cats too — millions of them — as gifts to the cat goddess Bastet. Tutankhamun's tomb lay hidden for 3,000 years until 1922, still filled with golden treasure.",
@@ -89,7 +89,7 @@ export const longAgoHall: MuseumRoom = {
     {
       id: "writing",
       title: "The First Writing",
-      emoji: "𓂀",
+      emoji: "✍️",
       fact: "Writing was invented about 5,000 years ago — first as little pictures pressed into clay to count sheep and sacks of grain. Shopping lists came before storybooks!",
       factSimple: "The first writing was for counting sheep and grain.",
       more: "Egyptian hieroglyphs stayed a mystery for centuries until the Rosetta Stone was found — the same message written three ways cracked the code. Every letter you're reading right now descends from those ancient picture-signs.",

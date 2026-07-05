@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { db } from "@/lib/db";
 import { Explorer, DiscoveryRecord } from "@/lib/types";
-import { museumRooms, totalDiscoveries } from "@/lib/museum/data";
+import { museumRooms, totalDiscoveries, findDiscovery } from "@/lib/museum/data";
 import { speak } from "@/lib/speech";
 
 type Props = {
@@ -17,6 +17,15 @@ function formatDate(ts: number) {
     month: "long",
     day: "numeric",
   });
+}
+
+/** Prefer the current pack emoji — stored records may hold outdated glyphs */
+function displayEmoji(r: DiscoveryRecord) {
+  if (r.discoveryId) {
+    const found = findDiscovery(r.discoveryId);
+    if (found) return found.discovery.emoji;
+  }
+  return r.emoji;
 }
 
 export default function Journal({ explorer, onExplorerChange }: Props) {
@@ -69,7 +78,7 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="flex items-start justify-between">
-            <div className="text-4xl">{selected.emoji}</div>
+            <div className="text-4xl">{displayEmoji(selected)}</div>
             <button
               onClick={() => toggleFavorite(selected)}
               className="text-2xl p-1"
@@ -111,7 +120,7 @@ export default function Journal({ explorer, onExplorerChange }: Props) {
                 className="text-3xl bg-slate-900 border border-amber-700/50 rounded-xl p-3 hover:bg-slate-800 transition"
                 title={r.title}
               >
-                {r.emoji}
+                {displayEmoji(r)}
               </button>
             ))}
           </div>

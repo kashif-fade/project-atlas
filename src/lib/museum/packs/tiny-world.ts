@@ -44,7 +44,7 @@ export const tinyWorld: MuseumRoom = {
     {
       id: "tardigrade",
       title: "Tardigrades",
-      emoji: "🐻‍❄️",
+      emoji: "🐻",
       fact: "Tardigrades — 'water bears' — are nearly invisible animals that can survive boiling, freezing, drying out completely, and even the vacuum of space.",
       factSimple: "Water bears can survive in outer space!",
       more: "When things get tough, a tardigrade curls into a dry ball called a tun and waits — for years if needed — then springs back to life with a drop of water. They live in moss, puddles, and probably your garden.",

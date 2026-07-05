@@ -48,7 +48,7 @@ export const worldWonders: MuseumRoom = {
     {
       id: "venice",
       title: "Venice",
-      emoji: "🛶",
+      emoji: "🚤",
       fact: "Venice is a city built on water — its streets are canals, its buses are boats, and its buildings stand on millions of wooden poles driven into the mud 1,000 years ago.",
       factSimple: "Venice's streets are made of water.",
       more: "Underwater, without air, the wooden poles turned almost as hard as stone instead of rotting. Venice has more than 400 bridges, and its gondola boats are always painted black by a law from centuries ago.",
@@ -75,7 +75,7 @@ export const worldWonders: MuseumRoom = {
     {
       id: "petra",
       title: "Petra",
-      emoji: "🏜️",
+      emoji: "🛕",
       fact: "Petra is an ancient city carved straight into rose-red desert cliffs 2,000 years ago — its people cut palaces, temples, and tombs out of solid rock.",
       factSimple: "Petra is a city carved into a cliff.",
       more: "Petra's builders were water wizards: they carved channels and dams that caught desert flash floods and stored water for a city of 20,000 people. Hidden for centuries, it was known only to local Bedouin until 1812.",

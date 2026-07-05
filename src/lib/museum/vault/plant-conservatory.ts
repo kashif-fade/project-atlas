@@ -30,7 +30,7 @@ export const plantConservatory: MuseumRoom = {
     {
       id: "venus-flytrap",
       title: "Venus Flytrap",
-      emoji: "🪤",
+      emoji: "🌱",
       fact: "The Venus flytrap is a plant that eats insects! It counts: a bug must touch its trigger hairs twice before the trap snaps shut in a tenth of a second.",
       factSimple: "This plant catches and eats bugs!",
       more: "Counting to two stops the trap wasting energy on raindrops. Flytraps grow naturally in only one small corner of the world — the boggy soils of the Carolinas, where poor soil made eating bugs a clever way to get extra food.",

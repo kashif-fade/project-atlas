@@ -8,7 +8,7 @@ export const inventorsWorkshop: MuseumRoom = {
     {
       id: "wheel",
       title: "The Wheel",
-      emoji: "🛞",
+      emoji: "⚙️",
       fact: "The wheel was invented over 5,000 years ago — but here's the surprise: the first wheels weren't for carts. They were for making pottery!",
       factSimple: "The first wheels were for making pots, not carts.",
       more: "It took hundreds of years before someone thought to turn the potter's wheel sideways and put it under a cart. Some of the best ideas are just old ideas turned a new way.",

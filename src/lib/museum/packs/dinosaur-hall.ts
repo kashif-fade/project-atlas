@@ -26,7 +26,7 @@ export const dinosaurHall: MuseumRoom = {
     {
       id: "velociraptor",
       title: "Velociraptor",
-      emoji: "🪶",
+      emoji: "🦃",
       fact: "Real velociraptors were only the size of a turkey — and they were covered in feathers! They were clever, fast hunters with a special curved claw on each foot.",
       factSimple: "Velociraptors were small, feathery, and fast.",
       more: "The movies made velociraptors big and scaly, but fossils show feather bumps on their arm bones. They couldn't fly — their feathers were probably for warmth and showing off.",

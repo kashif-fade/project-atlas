@@ -17,7 +17,7 @@ export const earthLab: MuseumRoom = {
     {
       id: "earthquake",
       title: "Earthquake",
-      emoji: "🫨",
+      emoji: "🏚️",
       fact: "The ground you stand on is not one solid shell — it's made of giant puzzle pieces called plates that slowly drift. When two pieces suddenly slip, the ground shakes.",
       factSimple: "Earthquakes happen when giant rock pieces underground slip.",
       more: "The plates move about as fast as your fingernails grow. Millions of years of that slow pushing built the tallest mountains — and it means the map of the world is still slowly changing.",
@@ -89,7 +89,7 @@ export const earthLab: MuseumRoom = {
     {
       id: "soil",
       title: "Soil & Earthworms",
-      emoji: "🪱",
+      emoji: "🐛",
       fact: "A single handful of healthy soil contains more living things than there are people on Earth. Earthworms are its gardeners — their tunnels let air and water reach plant roots.",
       factSimple: "One handful of soil holds billions of tiny living things.",
       more: "Earthworms eat fallen leaves and turn them back into food for plants. Charles Darwin, the famous scientist, spent 39 years studying earthworms and called them some of the most important animals in the world.",
