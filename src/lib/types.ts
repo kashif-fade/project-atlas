@@ -11,6 +11,8 @@ export type Explorer = {
   /** 3-emoji secret code protecting this profile (optional) */
   secretCode?: string;
   discoveries?: DiscoveryRecord[];
+  /** Saved coloring artwork: pageId → (regionId → color) */
+  colorings?: Record<string, Record<string, string>>;
 };
 
 export type DiscoveryRecord = {

@@ -1,6 +1,6 @@
 # Project Atlas — Roadmap & Progress Tracker
 
-Last updated: 2026-07-05 (Session 2)
+Last updated: 2026-07-17 (Session 9)
 
 ## Intent
 
@@ -51,6 +51,7 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
 | 6 | Content scale-up (120 authored: 100 live + 20 vaulted), read-aloud, sound | ✅ Done | vault flip documented in data.ts |
 | 7 | Polish: tablet/phone layout, transitions, kid-proofing | ✅ Done | arrows, chips, touch targets |
 | 8 | Playtest iteration with the kid | ✅ Done | 5 findings, all fixed |
+| 9 | Play Room arcade: 5 gentle games built from her wonders | ✅ Done | 2026-07-17; coloring, memory, catch, snap, puzzle |
 
 ## Changelog
 
@@ -114,3 +115,33 @@ Inspiration for polish/feel: Lingokids — but calm, and web-based.
   is now quality-ranked and locked once (voices load async; the old code
   re-picked badly); (5) wants music → gentle generative WebAudio pentatonic
   ambient, 🎵 toggle, persisted, default on.
+
+- **2026-07-17 — Session 9 (the Play Room arcade)**: motivation — she enjoys
+  Atlas but drifts to flashier games; the diagnosis was a narrow interaction
+  vocabulary (basically "tap to reveal + read"). Fix was *more verbs*, not
+  louder ones: the 🎲 Play tab is now a **PlayHub** menu of six games, all
+  built from the wonders in her own journal and all obeying the calm rules
+  (no scores/timers/streaks/fail states; wrong = gentle wiggle). New games in
+  `src/components/atlas/games/`:
+  (1) **Coloring Studio** (`ColoringStudio.tsx` + `src/lib/coloring.ts`) —
+  4 hand-authored SVG line-art pages (fish, rocket, flower, sailboat) with
+  color-by-number and free-color modes; artwork persists per page on the
+  Explorer via new `Explorer.colorings` (pageId → regionId → color). To add
+  pictures: append a `ColoringPage` to `coloringPages` (typed shape union, no
+  wiring needed). Good future home for the ART-PROMPTS illustration set.
+  (2) **Memory Match** (`MemoryMatch.tsx`) — classic concentration flip game,
+  up to 6 pairs from discovered wonders.
+  (3) **Snap!** (`Snap.tsx`) — flip the deck at your own pace, tap SNAP when
+  two wonders land in a row; deck seeds a few guaranteed adjacent matches.
+  (4) **Wonder Catch** (`WonderCatch.tsx`) — "hole 'em all": slide a basket to
+  catch falling wonders, misses drift away. The animation loop moves items via
+  direct DOM writes (refs), keeping React out of the 60fps path — no per-frame
+  reconcile, easy on tablet battery. First motor/dexterity play in the app.
+  (5) **Wonder Puzzles** (`Puzzle.tsx`) — tap-to-swap 3×3 jigsaw; each tile is
+  a translated viewport onto the wonder art (works for emoji and SVG images),
+  finished picture shown as a reference "box lid".
+  Curator's Match is kept in the lineup. Shared bits: `shuffle` now exported
+  from `match.ts`; three new sounds (`playFlip`/`playCatch`/`playSolve`) in
+  `sound.ts`. Verified with tsc + eslint and a live dev-server playthrough
+  (hub nav, coloring render, memory flips, puzzle slicing, catch loop).
+  Also added `.claude/launch.json` for `npm run dev` previews.

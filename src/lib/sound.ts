@@ -88,6 +88,26 @@ export function playOops() {
   tone(329.63, 0.14, 0.22, "sine", 0.05); // E4
 }
 
+/** Soft flip when a card turns over */
+export function playFlip() {
+  tone(523.25, 0, 0.06, "triangle", 0.05);
+}
+
+/** Bright little blip when a wonder is caught in the net */
+export function playCatch() {
+  tone(880, 0, 0.07, "sine", 0.07);
+  tone(1174.7, 0.05, 0.08, "sine", 0.06);
+}
+
+/** Warm rising sparkle when a puzzle or coloring is completed */
+export function playSolve() {
+  tone(523.25, 0, 0.14, "sine");     // C5
+  tone(659.25, 0.1, 0.14, "sine");   // E5
+  tone(783.99, 0.2, 0.16, "sine");   // G5
+  tone(1046.5, 0.3, 0.3, "sine");    // C6
+  tone(1318.5, 0.42, 0.35, "sine", 0.09); // E6
+}
+
 /** Shared AudioContext for other audio modules (music) */
 export function getAudioCtx() {
   return getCtx();

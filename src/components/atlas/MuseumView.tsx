@@ -12,7 +12,7 @@ import { isMusicOn, setMusicOn } from "@/lib/music";
 import { stopSpeaking } from "@/lib/speech";
 import Journal from "./Journal";
 import RoomScene from "./RoomScene";
-import MatchGame from "./MatchGame";
+import PlayHub from "./games/PlayHub";
 
 type Props = {
   explorer: Explorer;
@@ -207,7 +207,9 @@ export default function MuseumView({
         <Journal explorer={explorer} onExplorerChange={onExplorerChange} />
       )}
 
-      {view === "play" && <MatchGame explorer={explorer} />}
+      {view === "play" && (
+        <PlayHub explorer={explorer} onExplorerChange={onExplorerChange} />
+      )}
 
       {view === "room" && (
         <div className="text-center space-y-4">

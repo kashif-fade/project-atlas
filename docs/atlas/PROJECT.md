@@ -1,6 +1,6 @@
 # Project Atlas — Complete Project Summary
 
-Last updated: 2026-07-05 · Status: **v1 shipped, all 8 build sessions complete**
+Last updated: 2026-07-17 · Status: **v1 shipped; Session 9 added the Play Room arcade**
 
 This is the single consolidated reference for the project. If you're picking
 this up fresh (new chat, new machine, new collaborator), read this file first,
@@ -56,8 +56,19 @@ don't test · calm design · personal persistent world · big tap targets.
   wonder found), milestone + room-flavored one-liners
 - **Daily mystery**: deterministic per-date pick, hint line, golden ring on
   the object, celebration on find — deliberately streak-free
-- **Curator's Match** (🎲 Play tab): match your own discovered wonders to
-  names or facts; no score/timer; wrong = gentle wiggle
+- **Play Room** (🎲 Play tab): a `PlayHub` menu of six gentle games, all
+  built from the explorer's own discovered wonders, all calm (no
+  scores/timers/streaks/fail states; wrong = gentle wiggle). Components in
+  `src/components/atlas/games/`:
+  - **Coloring Studio**: color-by-number + free-color on hand-authored SVG
+    pages (`src/lib/coloring.ts`); artwork persists per page via
+    `Explorer.colorings`
+  - **Memory Match**: concentration flip game (up to 6 pairs)
+  - **Snap!**: flip the deck at your pace, tap SNAP on two-in-a-row
+  - **Wonder Catch**: slide a basket to catch falling wonders (DOM-driven
+    animation loop, React out of the 60fps path)
+  - **Wonder Puzzles**: tap-to-swap 3×3 jigsaw of a wonder's art
+  - **Curator's Match**: match your wonders to names or facts
 - **Audio**: read-aloud (Web Speech, quality-ranked voice locked per
   session), synthesized sound effects (pop/discover-arpeggio/mystery-
   shimmer/match/oops), generative ambient music (pentatonic pad + drone,
